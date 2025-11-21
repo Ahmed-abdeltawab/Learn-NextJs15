@@ -1,14 +1,15 @@
 import { getProducts } from "@/app/prisma-db";
 import { DeleteProductButton } from "./delete-product-button";
+import Link from "next/link";
 
-type Product = {
+export type TProduct = {
   id: number;
   title: string;
   description: string | null;
   price: number;
 };
 const ProductsDBPage = async () => {
-  const products: Product[] = await getProducts();
+  const products: TProduct[] = await getProducts();
 
   return (
     <div className="p-10">
@@ -22,9 +23,11 @@ const ProductsDBPage = async () => {
             className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transition-shadow duration-300 border border-gray-200 flex flex-col justify-between"
           >
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-2">
-                {product.title}
-              </h2>
+              <Link href={`/fetch-data/products-db/${product.id}`}>
+                <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                  {product.title}
+                </h2>
+              </Link>
               <p className="text-gray-600 mb-4 line-clamp-3">
                 {product.description}
               </p>
